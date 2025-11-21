@@ -5,4 +5,39 @@ output: html_document
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(rvest)
+library(readr)
+library(Lahman)
+library(httr)
+
+```
+```{r}
+url <- "https://www.baseball-reference.com/awards/hof_2025.shtml"
+
+page <- GET(
+url,
+user_agent("Mozilla/5.0")
+) %>%
+read_html()
+
+raw <- page %>%
+html_node("table#hof_BBWAA") %>%
+html_table(fill = TRUE)
+
+head(raw)
+names(raw)
+```
+
+
+```{r}
+raw$yearID <- 2025
+glimpse(raw)
+```
+
+
+
+```{r}
+write_csv(raw, "HallOfFame_2025_logan.csv")
 ```
