@@ -19,7 +19,6 @@ library(ggplot2)
 
 HallOfFame %>%
   filter(yearID == 2025)
-?HallOfFame
 
 
 ```
