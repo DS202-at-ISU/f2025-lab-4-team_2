@@ -10,3 +10,127 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## R Markdown
+```{r}
+
+library(rvest)
+library(tidyverse)
+library(Lahman)
+library(ggplot2)
+
+HallOfFame %>%
+  filter(yearID == 2025)
+?HallOfFame
+
+
+```
+
+## Gathering Data
+```{r}
+url <- "https://www.baseball-reference.com/awards/hof_2025.shtml"
+page <- read_html(url)
+
+#YearID
+yearID <- page %>%
+  html_node("#content h1") %>%
+  html_text(trim = TRUE) %>%
+  str_extract("\\d{4}") %>%
+  as.integer()
+
+yearID
+
+#gather tables
+tables <- page %>% html_nodes("table") %>% html_table(fill = TRUE)
+tables
+
+
+```
+
+
+After inspecting both the dataset and the website, I realized we can get the yearID from the H1 title which is directly under the id "content". Then the playerID can be obtained from the "data-append-csv" attribute. The Ballots and Needed cols can be extracted from "section_heading_text sidescroll_note" class then <ul>, the first <li> has the info we need. The votes col can be filled in by data-stat="votes" and then the inducted category can be made from checking if votes>needed. I am not sure on how to fill out category however all the stats for 2025 are for players I believe ao we can just say player for that category. For votedby there are only two tables on the page, one is for BBWAA and the other is Classic Baseball Era. The issue is that the other table has different ballot and needed counts.
+
+```{r}
+#gather playerIDs
+playerIDs_1 <- page %>%
+  html_nodes('table[id="hof_BBWAA"] td[data-append-csv]') %>%
+  html_attr("data-append-csv")
+
+playerIDs_2 <- page %>%
+  html_nodes('table[id="hof_Veterans"] td[data-append-csv]') %>%
+  html_attr("data-append-csv")
+
+playerIDs_1
+
+playerIDs_2
+
+#gather votes
+votes_1 <- page %>%
+  html_nodes('table[id="hof_BBWAA"] td[data-stat="votes"]') %>%
+  html_text(trim = TRUE) %>%
+  as.integer()
+
+votes_2 <- page %>%
+  html_nodes('table[id="hof_Veterans"] td[data-stat="votes"]') %>%
+  html_text(trim = TRUE) %>%
+  as.integer()
+
+votes_1
+votes_2
+
+#gather Ballots and ballots needed
+info_boxes <- page %>% html_nodes(".section_heading_text")
+
+info_text <- info_boxes %>%
+  html_nodes("li") %>%
+  html_text(trim = TRUE)
+
+info_text <- page %>% 
+  html_nodes(".section_heading_text") %>% 
+  html_text(trim = TRUE)
+
+# Keep lines containing “total ballots”
+info_text <- info_text[grepl("total ballots", info_text)]
+
+#first number in string
+ballots <- str_extract(info_text, "^\\d+") %>% as.integer()
+
+#number inside parentheses
+needed <- str_extract(info_text, "(?<=\\()\\d+") %>% as.integer()
+
+ballots
+needed
+```
+
+I believe that I have now gathered all data that we need to construct the dataframe, now we need to construct it
+
+```{r}
+#
+df1 <- tibble(
+  playerID = playerIDs_1,
+  yearID = yearID,
+  votedBy = "BBWAA",
+  ballots = ballots[1],
+  needed = needed[1],
+  votes = votes_1,
+  inducted = if_else(votes_1 >= needed[1], "Y", "N"),
+  category = "Player",
+  needed_note = NA_character_
+)
+
+df2 <- tibble(
+  playerID = playerIDs_2,
+  yearID = yearID,
+  votedBy = "Classic Baseball Era",
+  ballots = ballots[2],
+  needed = needed[2],
+  votes = votes_2,
+  inducted = if_else(votes_2 >= needed[2], "Y", "N"),
+  category = "Player",
+  needed_note = NA_character_
+)
+
+Hall_2025 <- bind_rows(df1, df2)
+Hall_2025
+
+write.csv(Hall_2025, file="HallOfFame_2025_caleb.csv", row.names = FALSE)
+
+```

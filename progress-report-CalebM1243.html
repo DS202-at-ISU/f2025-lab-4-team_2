@@ -359,6 +359,272 @@ display: none;
 
 <div id="r-markdown" class="section level2">
 <h2>R Markdown</h2>
+<pre class="r"><code>library(rvest)
+library(tidyverse)</code></pre>
+<pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+## ✔ forcats   1.0.1     ✔ stringr   1.5.2
+## ✔ ggplot2   4.0.0     ✔ tibble    3.3.0
+## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+## ✔ purrr     1.1.0     
+## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter()         masks stats::filter()
+## ✖ readr::guess_encoding() masks rvest::guess_encoding()
+## ✖ dplyr::lag()            masks stats::lag()
+## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+<pre class="r"><code>library(Lahman)</code></pre>
+<pre><code>## Warning: package &#39;Lahman&#39; was built under R version 4.5.2</code></pre>
+<pre class="r"><code>library(ggplot2)
+
+HallOfFame %&gt;%
+  filter(yearID == 2025)</code></pre>
+<pre><code>##     playerID yearID              votedBy ballots needed votes inducted category
+## 1  abreubo01   2025                BBWAA     394    296    77        N   Player
+## 2  allendi01   2025 Classic Baseball Era      16     12    13        Y   Player
+## 3  beltrca01   2025                BBWAA     394    296   277        N   Player
+## 4  boyerke01   2025 Classic Baseball Era      16     12    NA        N   Player
+## 5  buehrma01   2025                BBWAA     394    296    45        N   Player
+## 6  donaljo03   2025 Classic Baseball Era      16     12    NA        N   Player
+## 7  garvest01   2025 Classic Baseball Era      16     12    NA        N   Player
+## 8  gonzaca01   2025                BBWAA     394    296     2        N   Player
+## 9  grandcu01   2025                BBWAA     394    296     3        N   Player
+## 10 harrivi01   2025 Classic Baseball Era      16     12    NA        N   Player
+## 11 hernafe02   2025                BBWAA     394    296    81        N   Player
+## 12 hunteto01   2025                BBWAA     394    296    20        N   Player
+## 13  johnto01   2025 Classic Baseball Era      16     12     7        N   Player
+## 14 jonesad01   2025                BBWAA     394    296     3        N   Player
+## 15 jonesan01   2025                BBWAA     394    296   261        N   Player
+## 16 kinslia01   2025                BBWAA     394    296    10        N   Player
+## 17 martiru01   2025                BBWAA     394    296     9        N   Player
+## 18 mccanbr01   2025                BBWAA     394    296     7        N   Player
+## 19 parkeda01   2025 Classic Baseball Era      16     12    14        Y   Player
+## 20 pedrodu01   2025                BBWAA     394    296    47        N   Player
+## 21 pettian01   2025                BBWAA     394    296   110        N   Player
+## 22 ramirha01   2025                BBWAA     394    296     0        N   Player
+## 23 ramirma02   2025                BBWAA     394    296   135        N   Player
+## 24 rodnefe01   2025                BBWAA     394    296     0        N   Player
+## 25 rodrial01   2025                BBWAA     394    296   146        N   Player
+## 26 rodrifr03   2025                BBWAA     394    296    40        N   Player
+## 27 rolliji01   2025                BBWAA     394    296    71        N   Player
+## 28 sabatcc01   2025                BBWAA     394    296   342        Y   Player
+## 29 suzukic01   2025                BBWAA     394    296   393        Y   Player
+## 30 tiantlu01   2025 Classic Baseball Era      16     12    NA        N   Player
+## 31 tulowtr01   2025                BBWAA     394    296     4        N   Player
+## 32 utleych01   2025                BBWAA     394    296   157        N   Player
+## 33 vizquom01   2025                BBWAA     394    296    70        N   Player
+## 34 wagnebi02   2025                BBWAA     394    296   325        Y   Player
+## 35 wrighda03   2025                BBWAA     394    296    32        N   Player
+## 36 zobribe01   2025                BBWAA     394    296     0        N   Player
+##    needed_note
+## 1         &lt;NA&gt;
+## 2         &lt;NA&gt;
+## 3         &lt;NA&gt;
+## 4     &lt;5 votes
+## 5         &lt;NA&gt;
+## 6     &lt;5 votes
+## 7     &lt;5 votes
+## 8         &lt;NA&gt;
+## 9         &lt;NA&gt;
+## 10    &lt;5 votes
+## 11        &lt;NA&gt;
+## 12        &lt;NA&gt;
+## 13        &lt;NA&gt;
+## 14        &lt;NA&gt;
+## 15        &lt;NA&gt;
+## 16        &lt;NA&gt;
+## 17        &lt;NA&gt;
+## 18        &lt;NA&gt;
+## 19        &lt;NA&gt;
+## 20        &lt;NA&gt;
+## 21        &lt;NA&gt;
+## 22        &lt;NA&gt;
+## 23        &lt;NA&gt;
+## 24        &lt;NA&gt;
+## 25        &lt;NA&gt;
+## 26        &lt;NA&gt;
+## 27        &lt;NA&gt;
+## 28        &lt;NA&gt;
+## 29        &lt;NA&gt;
+## 30    &lt;5 votes
+## 31        &lt;NA&gt;
+## 32        &lt;NA&gt;
+## 33        &lt;NA&gt;
+## 34        &lt;NA&gt;
+## 35        &lt;NA&gt;
+## 36        &lt;NA&gt;</code></pre>
+<pre class="r"><code>?HallOfFame</code></pre>
+<pre><code>## starting httpd help server ... done</code></pre>
+</div>
+<div id="gathering-data" class="section level2">
+<h2>Gathering Data</h2>
+<pre class="r"><code>url &lt;- &quot;https://www.baseball-reference.com/awards/hof_2025.shtml&quot;
+page &lt;- read_html(url)
+
+#YearID
+yearID &lt;- page %&gt;%
+  html_node(&quot;#content h1&quot;) %&gt;%
+  html_text(trim = TRUE) %&gt;%
+  str_extract(&quot;\\d{4}&quot;) %&gt;%
+  as.integer()
+
+yearID</code></pre>
+<pre><code>## [1] 2025</code></pre>
+<pre class="r"><code>#gather tables
+tables &lt;- page %&gt;% html_nodes(&quot;table&quot;) %&gt;% html_table(fill = TRUE)
+tables</code></pre>
+<pre><code>## [[1]]
+## # A tibble: 29 × 39
+##    ``    ``          ``    ``    ``    ``    ``    ``    ``    ``    ``    ``   
+##    &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+##  1 Rk    Name        YoB   Votes %vote HOFm  HOFs  Yrs   WAR   WAR7  JAWS  Jpos 
+##  2 1     Ichiro Suz… 1st   393   99.7% 235   44    19    60.0  43.7  51.8  56.0 
+##  3 2     CC Sabathia 1st   342   86.8% 128   48    19    62.3  39.4  50.8  61.3 
+##  4 3     Billy Wagn… 10th  325   82.5% 107   24    16    27.7  19.8  23.7  31.6 
+##  5 4     Carlos Bel… 3rd   277   70.3% 126   52    20    70.0  44.4  57.2  58.0 
+##  6 5     Andruw Jon… 8th   261   66.2% 109   34    17    62.7  46.4  54.6  58.0 
+##  7 6     Chase Utley 2nd   157   39.8% 94    36    16    64.6  49.3  56.9  57.0 
+##  8 7     Alex Rodri… 4th   146   37.1% 390   77    22    117.4 64.3  90.8  55.4 
+##  9 8     Manny Rami… 9th   135   34.3% 226   69    19    69.3  40.0  54.6  53.5 
+## 10 9     Andy Petti… 7th   110   27.9% 128   44    18    60.2  34.1  47.2  61.3 
+## # ℹ 19 more rows
+## # ℹ 27 more variables: `Batting Stats` &lt;chr&gt;, `Batting Stats` &lt;chr&gt;,
+## #   `Batting Stats` &lt;chr&gt;, `Batting Stats` &lt;chr&gt;, `Batting Stats` &lt;chr&gt;,
+## #   `Batting Stats` &lt;chr&gt;, `Batting Stats` &lt;chr&gt;, `Batting Stats` &lt;chr&gt;,
+## #   `Batting Stats` &lt;chr&gt;, `Batting Stats` &lt;chr&gt;, `Batting Stats` &lt;chr&gt;,
+## #   `Batting Stats` &lt;chr&gt;, `Batting Stats` &lt;chr&gt;, `Pitching Stats` &lt;chr&gt;,
+## #   `Pitching Stats` &lt;chr&gt;, `Pitching Stats` &lt;chr&gt;, `Pitching Stats` &lt;chr&gt;, …
+## 
+## [[2]]
+## # A tibble: 3 × 38
+##   ``    ``          ``    ``      ``    ``    ``    ``    ``    ``    ``   
+##   &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+## 1 Rk    Name        Votes &quot;%vote&quot; HOFm  HOFs  Yrs   WAR   WAR7  JAWS  Jpos 
+## 2 1     Dave Parker 14    &quot;&quot;      125   42    19    40.1  37.4  38.7  56.0 
+## 3 2     Dick Allen  13    &quot;&quot;      99    39    15    58.8  45.9  52.4  56.1 
+## # ℹ 27 more variables: `Batting Stats` &lt;chr&gt;, `Batting Stats` &lt;chr&gt;,
+## #   `Batting Stats` &lt;chr&gt;, `Batting Stats` &lt;chr&gt;, `Batting Stats` &lt;chr&gt;,
+## #   `Batting Stats` &lt;chr&gt;, `Batting Stats` &lt;chr&gt;, `Batting Stats` &lt;chr&gt;,
+## #   `Batting Stats` &lt;chr&gt;, `Batting Stats` &lt;chr&gt;, `Batting Stats` &lt;chr&gt;,
+## #   `Batting Stats` &lt;chr&gt;, `Batting Stats` &lt;chr&gt;, `Pitching Stats` &lt;chr&gt;,
+## #   `Pitching Stats` &lt;chr&gt;, `Pitching Stats` &lt;chr&gt;, `Pitching Stats` &lt;chr&gt;,
+## #   `Pitching Stats` &lt;chr&gt;, `Pitching Stats` &lt;chr&gt;, `Pitching Stats` &lt;chr&gt;, …</code></pre>
+After inspecting both the dataset and the website, I realized we can get
+the yearID from the H1 title which is directly under the id “content”.
+Then the playerID can be obtained from the “data-append-csv” attribute.
+The Ballots and Needed cols can be extracted from “section_heading_text
+sidescroll_note” class then
+<ul>
+, the first
+<li>
+<p>has the info we need. The votes col can be filled in by
+data-stat=“votes” and then the inducted category can be made from
+checking if votes&gt;needed. I am not sure on how to fill out category
+however all the stats for 2025 are for players I believe ao we can just
+say player for that category. For votedby there are only two tables on
+the page, one is for BBWAA and the other is Classic Baseball Era. The
+issue is that the other table has different ballot and needed
+counts.</p>
+<pre class="r"><code>#gather playerIDs
+playerIDs_1 &lt;- page %&gt;%
+  html_nodes(&#39;table[id=&quot;hof_BBWAA&quot;] td[data-append-csv]&#39;) %&gt;%
+  html_attr(&quot;data-append-csv&quot;)
+
+playerIDs_2 &lt;- page %&gt;%
+  html_nodes(&#39;table[id=&quot;hof_Veterans&quot;] td[data-append-csv]&#39;) %&gt;%
+  html_attr(&quot;data-append-csv&quot;)
+
+playerIDs_1</code></pre>
+<pre><code>##  [1] &quot;suzukic01&quot; &quot;sabatc.01&quot; &quot;wagnebi02&quot; &quot;beltrca01&quot; &quot;jonesan01&quot; &quot;utleych01&quot;
+##  [7] &quot;rodrial01&quot; &quot;ramirma02&quot; &quot;pettian01&quot; &quot;hernafe02&quot; &quot;abreubo01&quot; &quot;rolliji01&quot;
+## [13] &quot;vizquom01&quot; &quot;pedrodu01&quot; &quot;buehrma01&quot; &quot;rodrifr03&quot; &quot;wrighda03&quot; &quot;hunteto01&quot;
+## [19] &quot;kinslia01&quot; &quot;martiru01&quot; &quot;mccanbr01&quot; &quot;tulowtr01&quot; &quot;jonesad01&quot; &quot;grandcu01&quot;
+## [25] &quot;gonzaca01&quot; &quot;zobribe01&quot; &quot;rodnefe01&quot; &quot;ramirha01&quot;</code></pre>
+<pre class="r"><code>playerIDs_2</code></pre>
+<pre><code>## [1] &quot;parkeda01&quot; &quot;allendi01&quot;</code></pre>
+<pre class="r"><code>#gather votes
+votes_1 &lt;- page %&gt;%
+  html_nodes(&#39;table[id=&quot;hof_BBWAA&quot;] td[data-stat=&quot;votes&quot;]&#39;) %&gt;%
+  html_text(trim = TRUE) %&gt;%
+  as.integer()
+
+votes_2 &lt;- page %&gt;%
+  html_nodes(&#39;table[id=&quot;hof_Veterans&quot;] td[data-stat=&quot;votes&quot;]&#39;) %&gt;%
+  html_text(trim = TRUE) %&gt;%
+  as.integer()
+
+votes_1</code></pre>
+<pre><code>##  [1] 393 342 325 277 261 157 146 135 110  81  77  71  70  47  45  40  32  20  10
+## [20]   9   7   4   3   3   2   0   0   0</code></pre>
+<pre class="r"><code>votes_2</code></pre>
+<pre><code>## [1] 14 13</code></pre>
+<pre class="r"><code>#gather Ballots and ballots needed
+info_boxes &lt;- page %&gt;% html_nodes(&quot;.section_heading_text&quot;)
+
+info_text &lt;- info_boxes %&gt;%
+  html_nodes(&quot;li&quot;) %&gt;%
+  html_text(trim = TRUE)
+
+info_text &lt;- page %&gt;% 
+  html_nodes(&quot;.section_heading_text&quot;) %&gt;% 
+  html_text(trim = TRUE)
+
+# Keep lines containing “total ballots”
+info_text &lt;- info_text[grepl(&quot;total ballots&quot;, info_text)]
+
+#first number in string
+ballots &lt;- str_extract(info_text, &quot;^\\d+&quot;) %&gt;% as.integer()
+
+#number inside parentheses
+needed &lt;- str_extract(info_text, &quot;(?&lt;=\\()\\d+&quot;) %&gt;% as.integer()
+
+ballots</code></pre>
+<pre><code>## [1] 394  16</code></pre>
+<pre class="r"><code>needed</code></pre>
+<pre><code>## [1] 296  12</code></pre>
+<p>I believe that I have now gathered all data that we need to construct
+the dataframe, now we need to construct it</p>
+<pre class="r"><code>#
+df1 &lt;- tibble(
+  playerID = playerIDs_1,
+  yearID = yearID,
+  votedBy = &quot;BBWAA&quot;,
+  ballots = ballots[1],
+  needed = needed[1],
+  votes = votes_1,
+  inducted = if_else(votes_1 &gt;= needed[1], &quot;Y&quot;, &quot;N&quot;),
+  category = &quot;Player&quot;,
+  needed_note = NA_character_
+)
+
+df2 &lt;- tibble(
+  playerID = playerIDs_2,
+  yearID = yearID,
+  votedBy = &quot;Classic Baseball Era&quot;,
+  ballots = ballots[2],
+  needed = needed[2],
+  votes = votes_2,
+  inducted = if_else(votes_2 &gt;= needed[2], &quot;Y&quot;, &quot;N&quot;),
+  category = &quot;Player&quot;,
+  needed_note = NA_character_
+)
+
+Hall_2025 &lt;- bind_rows(df1, df2)
+Hall_2025</code></pre>
+<pre><code>## # A tibble: 30 × 9
+##    playerID  yearID votedBy ballots needed votes inducted category needed_note
+##    &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;     &lt;int&gt;  &lt;int&gt; &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;      
+##  1 suzukic01   2025 BBWAA       394    296   393 Y        Player   &lt;NA&gt;       
+##  2 sabatc.01   2025 BBWAA       394    296   342 Y        Player   &lt;NA&gt;       
+##  3 wagnebi02   2025 BBWAA       394    296   325 Y        Player   &lt;NA&gt;       
+##  4 beltrca01   2025 BBWAA       394    296   277 N        Player   &lt;NA&gt;       
+##  5 jonesan01   2025 BBWAA       394    296   261 N        Player   &lt;NA&gt;       
+##  6 utleych01   2025 BBWAA       394    296   157 N        Player   &lt;NA&gt;       
+##  7 rodrial01   2025 BBWAA       394    296   146 N        Player   &lt;NA&gt;       
+##  8 ramirma02   2025 BBWAA       394    296   135 N        Player   &lt;NA&gt;       
+##  9 pettian01   2025 BBWAA       394    296   110 N        Player   &lt;NA&gt;       
+## 10 hernafe02   2025 BBWAA       394    296    81 N        Player   &lt;NA&gt;       
+## # ℹ 20 more rows</code></pre>
+<pre class="r"><code>write.csv(Hall_2025, file=&quot;HallOfFame_2025_caleb.csv&quot;, row.names = FALSE)</code></pre>
 </div>
 
 
